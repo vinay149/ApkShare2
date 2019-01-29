@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "443216757448",
+    "firebase_url": "https://apkshare2.firebaseio.com",
+    "project_id": "apkshare2",
+    "storage_bucket": "apkshare2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443216757448:android:5bb87b07e7300366",
+        "android_client_info": {
+          "package_name": "com.myapp.vinay.apkshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "443216757448-fbfvtj0kf0iducnsqrigepq56865943v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.myapp.vinay.apkshare",
+            "certificate_hash": "ea1dfe662f02485991da2d2fc2ccef0704fd5359"
+          }
+        },
+        {
+          "client_id": "443216757448-6983i98hnljkhhita7gqpolo5c2br19u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCW7v86CmsBRt0iStS-VbXzj88ECtjXhWM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "443216757448-6983i98hnljkhhita7gqpolo5c2br19u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
