@@ -1,0 +1,24 @@
+def versionName1(){
+    filename = '/home/vinay/.versionname'
+    File fh1 = new File(filename)
+    text = fh1.getText()
+    int version = text  as Integer
+    version = version +1
+    text = version.toString()
+    storeVersionName(text)
+}
+def storeVersionName(String version){
+    filename = '/home/vinay/.versionname'
+    File file = new File(filename)
+    file.write(version)
+    text = version
+}
+def versionCode1(){
+    versionMajor = 1
+    versionMinor = 4
+    buildNum = 9
+    version_code = versionMajor * 100000+ versionMinor * 1000 + buildNum
+}
+ext{
+
+}

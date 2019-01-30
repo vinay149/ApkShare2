@@ -3,20 +3,23 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
-
+apply from: 'versioning.gradle'
+GroovyShell shell = new GroovyShell()
+def tools = shell.parse(new File('app/versioning.gradle'))
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.myapp.vinay.apkshare"
         minSdkVersion 20
         targetSdkVersion 28
-        versionCode 3
-        versionName "2.1"
+        versionCode tools.versionCode1()
+        versionName tools.versionName1()
+        print("vinay342"+getVersionName()+" ok"+getVersionCode()+" ok")
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
     lintOptions {
-        baseline file("lint-baseline.xml")
+        abortOnError false
     }
 
     googleServices { disableVersionCheck = false }
@@ -26,10 +29,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    applicationVariants.all { variant ->
+       print(variant.buildType.name + 'heyhey')
+    }
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+
+}
+task versioncodehere << {
+    println('VARIABLE_NAME = ' + versioncode)
+    tools.versionName1()
 }
 def room_version = "1.1.1"
 def lifecycle_version = "1.1.1"
