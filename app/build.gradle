@@ -13,9 +13,9 @@ android {
         versionCode 3
         versionName "2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     lintOptions {
-        check 'NewApi', 'HandlerLeak'
         baseline file("lint-baseline.xml")
     }
 
