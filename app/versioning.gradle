@@ -18,12 +18,16 @@ def getVersionCode(){
     text = fh1.getText()
     int version = text  as Integer
 }
-def getVersionName(String versionName1)
+def getVersionName(String versionName)
 {
-    if(versionName1==null) {
-        version_name = "1.0"
+    if(versionName==null) {
+        if(System.getProperty('buildNumber')){
+            version_name = "1.0"+"-"+System.getProperty('buildNumber')
+        }else{
+            version_name = "1.0"
+        }
     }else{
-        version_name = System.getenv('VERSION_NAME')+"-"+System.getProperty('buildNumber')
+        version_name = System.getenv('VERSION_NAME')
     }
 }
 ext{

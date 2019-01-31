@@ -14,7 +14,7 @@ android {
         targetSdkVersion 28
         versionCode tools.getVersionCode()
         versionName tools.getVersionName(System.getenv('VERSION_NAME'))
-        print("version_code "+ getVersionCode() +System.getenv('STORE_PASSWORD') + "version_name" +getVersionName())
+        print("version_code "+ getVersionCode() + "version_name" +getVersionName()+System.getenv('KEY_PASSWORD'))
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -43,9 +43,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
-    }
-    applicationVariants.all { variant ->
-       print(variant.buildType.name + 'heyhey')
+
     }
     compileOptions {
         sourceCompatibility = '1.8'
