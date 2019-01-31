@@ -23,7 +23,7 @@ def getVersionName(String versionName1)
     if(versionName1==null) {
         version_name = "1.0"
     }else{
-        version_name = System.getenv('VERSION_NAME')+System.getProperty('BuildNumber')
+        version_name = System.getenv('VERSION_NAME')+"-"+System.getProperty('buildNumber')
     }
 }
 ext{
