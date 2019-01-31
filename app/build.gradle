@@ -8,15 +8,13 @@ GroovyShell shell = new GroovyShell()
 def tools = shell.parse(new File('app/versioning.gradle'))
 android {
     compileSdkVersion 28
-    String inputFromJenkins = System.getenv('VERSION_NAME')
-    println('VARIABLE_NAME = ' + inputFromJenkins)
     defaultConfig {
         applicationId "com.myapp.vinay.apkshare"
         minSdkVersion 20
         targetSdkVersion 28
-        versionCode tools.versionCode1()
-        versionName tools.versionName1()
-        print("vinay342"+getVersionName()+" ok"+getVersionCode()+" ok")
+        versionCode tools.getVersionCode()
+        versionName tools.getVersionName(System.getenv('VERSION_NAME'))
+        print("version_code "+ getVersionCode()  + "version_name" +getVersionName())
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -40,9 +38,9 @@ android {
     }
 
 }
-task versioncodehere << {
-    println('version_code = ' + versioncode)
-    tools.storeVersionName(versioncode)
+task updateversioncode << {
+    println('version_code = ')
+    tools.getVersionCode()
 }
 def room_version = "1.1.1"
 def lifecycle_version = "1.1.1"
