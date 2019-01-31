@@ -40,7 +40,7 @@ android {
 }
 task versioncodehere << {
     println('version_code = ' + versioncode)
-    tools.versionName1()
+    tools.storeVersionName(versioncode)
 }
 def room_version = "1.1.1"
 def lifecycle_version = "1.1.1"
