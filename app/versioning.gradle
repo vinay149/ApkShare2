@@ -17,17 +17,13 @@ def getVersionCode(){
     File fh1 = new File(filename)
     text = fh1.getText()
     int version = text  as Integer
-    version = version +1
-    storeVersionCode(version)
 }
-def getVersionName(String versionName)
+def getVersionName(String versionName1)
 {
-    if(versionName==null) {
+    if(versionName1==null) {
         version_name = "1.0"
-        println('VARIABLE_NAME = ' + version_name)
     }else{
         version_name = System.getenv('VERSION_NAME')
-        println('VARIABLE_NAME = ' + version_name)
     }
 }
 ext{

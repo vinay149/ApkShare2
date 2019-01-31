@@ -14,7 +14,7 @@ android {
         targetSdkVersion 28
         versionCode tools.getVersionCode()
         versionName tools.getVersionName(System.getenv('VERSION_NAME'))
-        print("version_code "+ getVersionCode()  + "version_name" +getVersionName())
+        print("version_code "+ getVersionCode() +System.getProperty('BuildNumber') + "version_name" +getVersionName())
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -40,7 +40,7 @@ android {
 }
 task updateversioncode << {
     println('version_code = ')
-    tools.getVersionCode()
+    tools.storeVersionCode(tools.getVersionCode())
 }
 def room_version = "1.1.1"
 def lifecycle_version = "1.1.1"
