@@ -8,6 +8,8 @@ GroovyShell shell = new GroovyShell()
 def tools = shell.parse(new File('app/versioning.gradle'))
 android {
     compileSdkVersion 28
+    String inputFromJenkins = System.getenv('VERSION_NAME')
+    println('VARIABLE_NAME = ' + inputFromJenkins)
     defaultConfig {
         applicationId "com.myapp.vinay.apkshare"
         minSdkVersion 20
