@@ -5,6 +5,7 @@ def versionName1(){
     int version = text  as Integer
     version = version +1
     text = version.toString()
+    storeVersionName(text)
 }
 def storeVersionName(String version){
     filename = '/home/vinay/.versionname'
