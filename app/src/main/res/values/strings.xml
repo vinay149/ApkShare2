@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ApkShare</string>
+    <string name="device_token">com.example.vinay.device_fcmtoken</string>
 </resources>

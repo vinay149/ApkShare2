@@ -27,9 +27,23 @@ import android.graphics.drawable.BitmapDrawable
 import android.support.annotation.RequiresApi
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.app.WindowDecorActionBar
+import com.google.common.reflect.TypeToken
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonObject
+import com.myapp.vinay.apkshare.Utils.Utils.Companion.hasNetwork
+import okhttp3.Cache
+import okhttp3.MediaType
+import okhttp3.OkHttpClient
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.lang.reflect.Type
 
 @RequiresApi(Build.VERSION_CODES.HONEYCOMB)
-class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, View.OnClickListener, CustomAdaper.OnItemClickListener ,NoticeDialogFragments.NoticeDialogListener{
+class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, View.OnClickListener,
+        CustomAdaper.OnItemClickListener ,NoticeDialogFragments.NoticeDialogListener,Callback<List<RetroData>>{
 
     private var mAppList: ArrayList<AppInfo>? = null
     private var mRecylerView: RecyclerView? = null
@@ -48,6 +62,12 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, View.O
         }
         dialog.dismiss()
     }
+    companion object {
+
+        fun sendTokenToServer(token: String) {
+
+        }
+    }
     override fun onDialogNegativeClick(dialog: Dialog) {
         dialog.dismiss()
     }
@@ -57,33 +77,35 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, View.O
         animationView = findViewById(R.id.animation_view)
         animationView!!.playAnimation()
         animationView!!.visibility = View.VISIBLE
-        apkMap=HashMap();
+        apkMap = HashMap();
         mAppList = ArrayList()
+        val sharedPreferences: SharedPreferences? = applicationContext.getSharedPreferences(getString(R.string.device_token), Context.MODE_PRIVATE)
+        Log.d("vinattoken", "here" + sharedPreferences!!.getString("device_fcmtoken", ""))
         listViewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
         listViewModel!!.liveData!!.observe(this, Observer {
-            mCount=it!!.size
-            for (i in it!!){
-                var appInfo:AppInfo=AppInfo();
+            mCount = it!!.size
+            for (i in it!!) {
+                var appInfo: AppInfo = AppInfo();
                 appInfo.packInfo = i.packageName
                 appInfo.apkPath = "1"
                 appInfo.appInfo = i.appName
 
-                if(i!!.appIconDrawable !=null) {
+                if (i!!.appIconDrawable != null) {
 
                     val image = BitmapDrawable(resources, BitmapFactory.decodeByteArray(i.appIconDrawable, 0, i.appIconDrawable!!.size))
                     appInfo.apkIcon = image
 
 
                 }
-                if(apkMap!![appInfo.packInfo]!=1) {
+                if (apkMap!![appInfo.packInfo] != 1) {
                     mAppList!!.add(appInfo)
-                    apkMap!![appInfo.packInfo]=1
+                    apkMap!![appInfo.packInfo] = 1
                 }
                 mRecylerView = findViewById(R.id.recyclerView)
                 mLayoutManager = LinearLayoutManager(applicationContext)
                 mRecylerView!!.layoutManager = mLayoutManager
                 if (mRecylerView != null) {
-                    customAdaper = CustomAdaper(mAppList, this@MainActivity,this)
+                    customAdaper = CustomAdaper(mAppList, this@MainActivity, this)
                     mRecylerView!!.adapter = customAdaper
                     animationView!!.visibility = View.GONE
                     animationView!!.cancelAnimation()
@@ -91,10 +113,31 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, View.O
 
             }
             Log.d("VinayHere1234", "Vinay");
-            var apkList:loadApkList?= loadApkList().execute() as loadApkList?
+            var apkList: loadApkList? = loadApkList().execute() as loadApkList?
+        })
+
+        var service: getDataService? = RetrofitClientInstance.getRetrofitInstance().create(getDataService::class.java)
+        var service1: getDataService? = RetrofitClientInstance.getRetrofitInstancePost().create(getDataService::class.java)
+        var call: Call<List<RetroData>>? = service!!.getAllData()
+        var gson:Gson?=Gson()
+        var tokenId:TokenId?= TokenId()
+        tokenId!!.settokenId( sharedPreferences!!.getString("device_fcmtoken", ""))
+        var requestBody:RequestBody?= RequestBody.create(MediaType.parse("application/json"),gson!!.toJson(tokenId));
+        call!!.enqueue(this)
+        service1!!.getToken(requestBody).enqueue(object :Callback<TokenId>{
+            override fun onFailure(call: Call<TokenId>, t: Throwable) {
+
+            }
+            override fun onResponse(call: Call<TokenId>, response: Response<TokenId>) {
+                if(response.isSuccessful) {
+                    Log.d("Vinaydatva", "here" + response.body() + gson!!.toJson(tokenId));
+                } else{
+                    Log.d("VinayData","here"+response)
+                }
+            }
+
         })
     }
-
     private fun isSystemPackage(packageInfo: PackageInfo): Boolean {
         return packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
     }
@@ -104,7 +147,13 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, View.O
 
     }
 
+    override fun onFailure(call: Call<List<RetroData>>, t: Throwable) {
 
+    }
+
+    override fun onResponse(call: Call<List<RetroData>>, response: Response<List<RetroData>>) {
+        Log.d("ResponseCheckHere","here"+response.body())
+    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.main_menu, menu)

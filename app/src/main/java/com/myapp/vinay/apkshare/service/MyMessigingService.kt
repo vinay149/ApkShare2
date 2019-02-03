@@ -12,10 +12,12 @@ import com.google.firebase.messaging.RemoteMessage
 import com.myapp.vinay.apkshare.R
 import kotlinx.android.synthetic.main.activity_main.view.*
 import java.lang.reflect.Method
+import android.os.Bundle
+
+
 
 
 public class MyMessigingService : FirebaseMessagingService() {
-
 
     override fun onMessageReceived(p0: RemoteMessage?) {
         Log.d("ServiceHere","Vinay");
@@ -33,4 +35,5 @@ public class MyMessigingService : FirebaseMessagingService() {
         var mNotificationManager:NotificationManager?= getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
         mNotificationManager!!.notify(0,mBuilder.build())
     }
+
 }
