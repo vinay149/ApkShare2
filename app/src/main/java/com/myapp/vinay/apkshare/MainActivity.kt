@@ -56,8 +56,10 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, View.O
     var mCount:Int?=null
     override fun onDialogPositiveClick(dialog: Dialog,int: Int) {
         if(int==0){
+            Log.d("Comehereapk","vinayhere"+mApkClickedItem!!.apkPath);
         shareapk(mApkClickedItem!!)
         } else{
+            Log.d("Comehereapk","vinayhere2");
             sharePlayStoreLink(mApkClickedItem!!.packInfo)
         }
         dialog.dismiss()
@@ -82,12 +84,13 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, View.O
         val sharedPreferences: SharedPreferences? = applicationContext.getSharedPreferences(getString(R.string.device_token), Context.MODE_PRIVATE)
         Log.d("vinattoken", "here" + sharedPreferences!!.getString("device_fcmtoken", ""))
         listViewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
+       // listViewModel!!.deletAll()
         listViewModel!!.liveData!!.observe(this, Observer {
             mCount = it!!.size
             for (i in it!!) {
                 var appInfo: AppInfo = AppInfo();
                 appInfo.packInfo = i.packageName
-                appInfo.apkPath = "1"
+                appInfo.apkPath = i.appPath
                 appInfo.appInfo = i.appName
 
                 if (i!!.appIconDrawable != null) {
@@ -274,8 +277,9 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, View.O
 
                                    apkDetails.packageName = mPackName;
                                    apkDetails.appName = mAppInfo;
+                                   apkDetails.appPath = mApk
                                    apkDetails.appIconDrawable = bitmapdata
-                                   listViewModel!!.insert(apkDetails)
+                                  listViewModel!!.insert(apkDetails)
                                }
                            }
                        }

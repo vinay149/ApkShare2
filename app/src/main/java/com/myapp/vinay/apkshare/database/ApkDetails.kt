@@ -17,6 +17,10 @@ class ApkDetails :Serializable{
     @ColumnInfo(name = "app_name")
     var appName:String?=null
 
+    @ColumnInfo(name ="apk_path")
+
+    var appPath:String?=null
+
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     var appIconDrawable:ByteArray?=null
 

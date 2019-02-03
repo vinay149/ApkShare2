@@ -92,6 +92,8 @@ public class CustomAdaper extends RecyclerView.Adapter<CustomAdaper.MyHolder>  i
        myHolder.mPackageName.setText (mArrayList.get (i).getPackInfo ());
       // myHolder.mAppIcon.setImageDrawable (mArrayList.get (i).getApkIcon ());
         GlideApp.with(context).load (mArrayList.get (i).getApkIcon ()).circleCrop ().into (myHolder.mAppIcon);
+    
+        Log.d("Comehereapk","here13234"+mArrayList.get (i).getApkPath ());
        myHolder.bind(mArrayList.get (i),listener);
     }
     @Override
@@ -115,7 +117,9 @@ public class CustomAdaper extends RecyclerView.Adapter<CustomAdaper.MyHolder>  i
             mImageView.setOnClickListener (new View.OnClickListener () {
                @Override
                public void onClick (View v) {
-                    listener.onItemClick (appInfo);
+                   
+                   Log.d("Comehereapk","here132"+appInfo.getApkPath ());
+                   listener.onItemClick (appInfo);
                }
            });
         }
